@@ -1,0 +1,56 @@
+# Eclipse
+.classpath
+.project
+.settings
+eclipsebin
+.gradle
+bin
+gen
+build
+out
+lib
+target
+pom.xml.*
+release.properties
+# Idea
+.idea
+*.iml
+classes
+obj
+#MacOS
+.DS_Store
+local.properties
+release/
+.repo
+*.apk
+logs
+java_pid*
+
+.DS_Store
+node_modules
+*/dist
+dist
+
+
+# local env files
+.env.local
+.env.*.local
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+*.iml
+
+package-lock.json

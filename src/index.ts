@@ -1,0 +1,6 @@
+export { ChannelClient } from './ChannelClient'
+export { ChannelService } from './ChannelService'
+export { ChannelClientImpl } from './impl/ChannelClientImpl'
+export { ChannelServiceImpl } from './impl/ChannelServiceImpl'
+export {ChannelFactoryInstance} from './ChannelFactory'
+export {ChannelMessage,ChannelUpstream,ChannelDownstream} from './ChannelMessage'
