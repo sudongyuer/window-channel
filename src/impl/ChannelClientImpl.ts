@@ -9,11 +9,14 @@ type Callback = {
 
 type Subscriber = (response: any) => void
 
+/**
+ * 客户端实现类
+ */
 export class ChannelClientImpl implements ChannelClient {
     isRunning = true
-    clientWindow: Window
-    serviceWindow: Window
-    origin: string
+    clientWindow: Window//客户端的window对象
+    serviceWindow: Window//服务端的window对象
+    origin: string//服务端用于接受消息的源
 
     requestCache = new Map<String, Callback>()
     subscriptionCache = new Map<String, Set<Subscriber>>()
@@ -22,12 +25,18 @@ export class ChannelClientImpl implements ChannelClient {
         this.clientWindow = clientWindow
         this.serviceWindow = serviceWindow
         this.origin = origin
+        //给客户端添加收到消息的事件监听
         clientWindow.addEventListener('message', this.receiveResponse.bind(this), false)
     }
 
+    /**
+     * 收到服务端消息的处理函数
+     * @param ev 服务端发送的消息事件对象
+     */
     receiveResponse(ev: MessageEvent) {
         if (ev.origin !== this.origin) {
-            return
+
+
         }
         const response = (<ChannelDownstream>(ev.data))
 
@@ -47,6 +56,10 @@ export class ChannelClientImpl implements ChannelClient {
         }
     }
 
+    /**
+     * 超时失败执行的函数
+     * @param requestId 请求Id号
+     */
     timeoutFailed(requestId: string) {
         if (this.requestCache.has(requestId)) {
             const callback = this.requestCache.get(requestId)!!
@@ -55,6 +68,12 @@ export class ChannelClientImpl implements ChannelClient {
         }
     }
 
+    /**
+     * 确定订阅
+     * @param destination 要订阅的借口
+     * @param callback    收到消息后触发的回调函数
+     * @param timeout     订阅的超时时间
+     */
     actualSubscribe(destination: string, callback: Callback, timeout: number = 3) {
         const request = <ChannelUpstream>{
             type: 'subscribe',
@@ -63,11 +82,18 @@ export class ChannelClientImpl implements ChannelClient {
         }
         this.serviceWindow.postMessage(request, this.origin)
         this.requestCache.set(request.requestId, callback)
-        setTimeout(() => {
+        //始终都会执行超时么
+        setTimeout(()=>{
             this.timeoutFailed(request.requestId)
         }, timeout)
     }
 
+    /**
+     * 发送请求
+     * @param destination 请求的接口
+     * @param message 要发送的消息
+     * @param timeout 请求超时时间
+     */
     request<REQUEST, RESPONSE>(destination: string, message: REQUEST, timeout: number = 3): Promise<RESPONSE> {
         if (!this.isRunning) {
             throw Error('This client has finished.')
@@ -87,6 +113,12 @@ export class ChannelClientImpl implements ChannelClient {
         })
     }
 
+    /**
+     * 请求订阅
+     * @param destination 要订阅的接口
+     * @param subscriber 订阅成功后的回调函数
+     * @param timeout     订阅超时时间
+     */
     subscribe<RESPONSE>(destination: string, subscriber: (response: RESPONSE) => void, timeout: number = 3): Promise<void> {
         if (!this.isRunning) {
             throw Error('This client has finished.')
@@ -111,6 +143,11 @@ export class ChannelClientImpl implements ChannelClient {
         })
     }
 
+    /**
+     * 取消订阅
+     * @param destination 取消订阅的接口
+     * @param timeout 取消订阅的超时时间
+     */
     unsubscribe(destination: string, timeout: number = 3) {
         const request = <ChannelUpstream>{
             type: 'unsubscribe',
@@ -121,6 +158,10 @@ export class ChannelClientImpl implements ChannelClient {
         this.subscriptionCache.delete(destination)
     }
 
+    /**
+     * 关闭客户端
+     * 释放监听资源
+     */
     finish(): void {
         this.isRunning = false
         this.clientWindow.removeEventListener('message', this.receiveResponse, false)
