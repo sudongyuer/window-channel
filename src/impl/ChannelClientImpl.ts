@@ -34,9 +34,8 @@ export class ChannelClientImpl implements ChannelClient {
      * @param ev 服务端发送的消息事件对象
      */
     receiveResponse(ev: MessageEvent) {
-        if (ev.origin !== this.origin) {
-
-
+        if (this.origin!=='*'&& ev.origin !== this.origin) {
+            return
         }
         const response = (<ChannelDownstream>(ev.data))
 
