@@ -49,7 +49,7 @@ export class ChannelServiceImpl implements ChannelService {
         try {
             let handler = this.requestHandler.get(request.destination)!!
             response.status = 200
-            response.body = handler(request.body)
+            response.body = handler(request.body)//对要返回的数据处理进行处理
         } catch (e) {
             response.status = 400
             response.body = e
@@ -108,14 +108,18 @@ export class ChannelServiceImpl implements ChannelService {
 
     /**
      * 为客户端要请求的接口建立侦听
-     * @param destination
-     * @param serve
+     * @param destination 要建立的侦听接口
+     * @param serve 收到请求消息后执行的回调函数
      */
     listen<REQUEST, RESPONSE>(destination: string, serve: (request: REQUEST) => RESPONSE): void {
         this.requestHandler.set(destination, serve)
     }
 
-
+    /**
+     * 为客户端要订阅的接口建立侦听
+     * @param destination
+     * @param serve 当收到订阅后执行的回调函数
+     */
     observe(destination: string, serve?: () => void): void {
         this.observeHandler.set(destination, serve)
     }
