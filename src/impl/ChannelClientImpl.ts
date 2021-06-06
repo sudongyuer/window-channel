@@ -81,7 +81,6 @@ export class ChannelClientImpl implements ChannelClient {
         }
         this.serviceWindow.postMessage(request, this.origin)
         this.requestCache.set(request.requestId, callback)
-        //始终都会执行超时么
         setTimeout(()=>{
             this.timeoutFailed(request.requestId)
         }, timeout)
@@ -123,6 +122,7 @@ export class ChannelClientImpl implements ChannelClient {
             throw Error('This client has finished.')
         }
         return new Promise((resolve, reject) => {
+            //没有订阅缓存
             if (!this.subscriptionCache.has(destination)) {
                 this.subscriptionCache.set(destination, new Set<Subscriber>())
                 this.actualSubscribe(destination, <Callback>{
