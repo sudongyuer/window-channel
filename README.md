@@ -33,14 +33,17 @@ import {WindowChannel} from '@imf/window-channel'
     let client = WindowChannel.newChannelClient(window,iFrame.contentWindow,"*")
     
     //客户端向服务器端请求
-    client.request('/hello','客户端发送的消息',1000)
-        .then((value)=>{
-            console.log(value)
-        })
-        .catch((err)=>{
-        console.log(err)
-    })
-
+    function f() {
+        client.request('/hello', '客户端发送的消息', 1000)
+            .then((value) => {
+                console.log(value)
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+    }
+    f()
+    setInterval(f,3000)//循环请求
 
 ```
 ## 服务端页面
@@ -62,6 +65,14 @@ service.listen('/hello',(value)=>{
     console.log(value)//value为客户端发送的消息
     return '服务端发送的消息' //return 服务端返回的消息
 })
+//打开订阅的接口让客户端可以订阅
+service.observe('/dingyue',()=>{
+    console.log('订阅成功')
+})
+//20s后广播内容
+setTimeout(()=>{
+    service.broadcast('/dingyue','聊天室广播内容')
+},20000)
 
 
 ```
