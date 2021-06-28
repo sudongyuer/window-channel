@@ -73,7 +73,7 @@ export class ChannelClientImpl implements ChannelClient {
      * @param callback    收到消息后触发的回调函数
      * @param timeout     订阅的超时时间
      */
-    actualSubscribe(destination: string, callback: Callback, timeout: number = 3) {
+    actualSubscribe(destination: string, callback: Callback, timeout: number = 3000) {
         const request = <ChannelUpstream>{
             type: 'subscribe',
             requestId: uuid.v4(),
@@ -92,7 +92,7 @@ export class ChannelClientImpl implements ChannelClient {
      * @param message 要发送的消息
      * @param timeout 请求超时时间
      */
-    request<REQUEST, RESPONSE>(destination: string, message: REQUEST, timeout: number = 3): Promise<RESPONSE> {
+    request<REQUEST, RESPONSE>(destination: string, message: REQUEST, timeout: number = 3000): Promise<RESPONSE> {
         if (!this.isRunning) {
             throw Error('This client has finished.')
         }
@@ -117,7 +117,7 @@ export class ChannelClientImpl implements ChannelClient {
      * @param subscriber 订阅成功后的回调函数
      * @param timeout     订阅超时时间
      */
-    subscribe<RESPONSE>(destination: string, subscriber: (response: RESPONSE) => void, timeout: number = 3): Promise<void> {
+    subscribe<RESPONSE>(destination: string, subscriber: (response: RESPONSE) => void, timeout: number = 3000): Promise<void> {
         if (!this.isRunning) {
             throw Error('This client has finished.')
         }
@@ -147,7 +147,7 @@ export class ChannelClientImpl implements ChannelClient {
      * @param destination 取消订阅的接口
      * @param timeout 取消订阅的超时时间
      */
-    unsubscribe(destination: string, timeout: number = 3) {
+    unsubscribe(destination: string, timeout: number = 3000) {
         const request = <ChannelUpstream>{
             type: 'unsubscribe',
             requestId: uuid.v4(),
