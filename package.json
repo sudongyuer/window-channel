@@ -1,7 +1,7 @@
 {
   "name": "@imf/window-channel",
   "version": "0.1.3",
-  "description": "ifram window message",
+  "description": "iframe window message channel",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {

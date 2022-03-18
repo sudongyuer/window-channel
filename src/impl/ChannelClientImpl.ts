@@ -37,7 +37,7 @@ export class ChannelClientImpl implements ChannelClient {
         if (this.origin!=='*'&& ev.origin !== this.origin) {
             return
         }
-        const response = (<ChannelDownstream>(ev.data))
+        const response = (ev.data) as ChannelDownstream
 
         if ((response.type === 'response' || response.type === 'ack') && this.requestCache.has(response.requestId)) {
             const callback = this.requestCache.get(response.requestId)!!
@@ -103,6 +103,7 @@ export class ChannelClientImpl implements ChannelClient {
             body: message
         }
         return new Promise((resolve, reject) => {
+            console.log(this.origin)
             this.serviceWindow.postMessage(request, this.origin)
             this.requestCache.set(request.requestId, <Callback>{success: resolve, failed: reject})
             setTimeout(() => {

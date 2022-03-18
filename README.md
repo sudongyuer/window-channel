@@ -1,9 +1,8 @@
-# WindowChannel window与iframe的前端通讯库
+# window-channel
 
-# 介绍
-此库用于一个window嵌套iframe这种场景之下完成消息的传递,此库对window的原生postMessage和addEventListener('message',(e)=>{},false)做了一层封装
+![](https://tva1.sinaimg.cn/large/e6c9d24egy1h0ehoj8eesj20lw0kamxu.jpg)
 
-# 安装
+# install
 ```
 npm install @imf/window-channel
 ```
