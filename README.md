@@ -10,6 +10,7 @@ A very simple window communication library.
 <p>
 <p align="center">
   <a href="https://www.npmjs.com/package/@haiyaotec/window-channel"><img src="https://img.shields.io/npm/v/@haiyaotec/window-channel?color=a1b858&label="></a>
+  <a href="https://github.com/HaiyaoTec/window-channel" target="__blank"><img alt="GitHub stars" src="https://img.shields.io/github/stars/HaiyaoTec/window-channel?style=social"></a>
 <p>
 <h3 align="center">
 <a ><i>Get Start!</i></a>
