@@ -4,9 +4,9 @@ import * as uuid from 'uuid'
 
 type OnRequest = (request: any) => any
 type OnObserve = (() => void) | undefined
-//服务端实现类
+
 export class ChannelServiceImpl implements ChannelService {
-    serviceWindow: Window//服务端的window对象
+    serviceWindow: Window
     requestHandler = new Map<string, OnRequest>()
     observeHandler = new Map<string, OnObserve>()
     subscriptions = new Map<string, Set<MessageEvent>>()
@@ -16,30 +16,27 @@ export class ChannelServiceImpl implements ChannelService {
         serviceWindow.addEventListener('message', this.receiveRequest.bind(this), false)
     }
 
-    /**
-     * 收到消息后会执行的接受请求的回调函数
-     * @param ev 客户端发送来的消息对象
-     */
+
     receiveRequest(ev: MessageEvent) {
         const request = (<ChannelUpstream>(ev.data))
         if (request.type === 'request' && this.requestHandler.has(request.destination)) {
+
             // @ts-ignore
             ev.source.postMessage(this.handleRequest(request), ev.origin)
         }
         if (request.type === 'subscribe' && this.observeHandler.has(request.destination)) {
+
             // @ts-ignore
             ev.source.postMessage(this.handleSubscribe(request, ev), ev.origin)
         }
         if (request.type === 'unsubscribe' && this.observeHandler.has(request.destination)) {
+
             // @ts-ignore
             ev.source.postMessage(this.handleUnSubscribe(request, ev), ev.origin)
         }
     }
 
-    /**
-     * 处理客户端发送的请求
-     * @param request 客户端传入的消息对象
-     */
+
     handleRequest(request: ChannelUpstream): ChannelDownstream {
         const response:ChannelDownstream = <ChannelDownstream>{
             type: 'response',
@@ -49,7 +46,7 @@ export class ChannelServiceImpl implements ChannelService {
         try {
             let handler = this.requestHandler.get(request.destination)!!
             response.status = 200
-            response.body = handler(request.body)//对要返回的数据处理进行处理
+            response.body = handler(request.body)
         } catch (e) {
             response.status = 400
             response.body = e
@@ -58,11 +55,7 @@ export class ChannelServiceImpl implements ChannelService {
         return response
     }
 
-    /**
-     * 处理客户端订阅的函数
-     * @param request 客户端发送的消息对象
-     * @param ev  客户端发送的消息事件对象
-     */
+
     handleSubscribe(request: ChannelUpstream, ev: MessageEvent): ChannelDownstream {
         const response = <ChannelDownstream>{
             type: 'ack',
@@ -88,11 +81,7 @@ export class ChannelServiceImpl implements ChannelService {
         return response
     }
 
-    /**
-     * 处理取消订阅的方法
-     * @param request 客户端发送的消息对象
-     * @param ev  客户端发送的消息事件对象
-     */
+
     handleUnSubscribe(request: ChannelUpstream, ev: MessageEvent): ChannelDownstream {
         const response = <ChannelDownstream>{
             type: 'ack',
@@ -106,20 +95,12 @@ export class ChannelServiceImpl implements ChannelService {
         return response
     }
 
-    /**
-     * 为客户端要请求的接口建立侦听
-     * @param destination 要建立的侦听接口
-     * @param serve 收到请求消息后执行的回调函数
-     */
+
     listen<REQUEST, RESPONSE>(destination: string, serve: (request: REQUEST) => RESPONSE): void {
         this.requestHandler.set(destination, serve)
     }
 
-    /**
-     * 为客户端要订阅的接口建立侦听
-     * @param destination
-     * @param serve 当收到订阅后执行的回调函数
-     */
+
     observe(destination: string, serve?: () => void): void {
         this.observeHandler.set(destination, serve)
     }
@@ -134,6 +115,7 @@ export class ChannelServiceImpl implements ChannelService {
             body: message
         }
         this.subscriptions.get(destination)?.forEach((ev) => {
+
             // @ts-ignore
             ev.source.postMessage(JSON.parse(JSON.stringify(response)), ev.origin)
         })

@@ -1,9 +1,10 @@
 {
-  "name": "@imf/window-channel",
-  "version": "0.1.3",
+  "name": "@haiyaotec/window-channel",
+  "version": "1.0.0",
   "description": "iframe window message channel",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "homepage": "https:
   "scripts": {
     "prepublishOnly": "rm -rf || rimraf ./dist && tsc",
     "build": "tsc"
@@ -19,11 +20,8 @@
     "ts-node": "^9.0.0",
     "typescript": "^4.1.3"
   },
-  "author": "IMF",
+  "author": "sudongyuer",
   "license": "ISC",
-  "publishConfig": {
-    "@imf:registry": "http://maven.jinuo.me/repository/jinuo-npm-inner"
-  },
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
