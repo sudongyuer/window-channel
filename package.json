@@ -1,6 +1,6 @@
 {
   "name": "@haiyaotec/window-channel",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "iframe window message channel",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -35,5 +35,10 @@
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
-  }
+  },
+  "files": [
+    "dist",
+    "*.d.ts",
+    "*.mjs"
+  ]
 }
