@@ -4,7 +4,10 @@
   "description": "iframe window message channel",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "homepage": "https:
+  "homepage": "https://github.com/HaiyaoTec/window-channel",
+  "repository": {
+    "url": "https://github.com/HaiyaoTec/window-channel"
+  },
   "scripts": {
     "prepublishOnly": "rm -rf || rimraf ./dist && tsc",
     "build": "tsc"

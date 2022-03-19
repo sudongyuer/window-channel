@@ -1,5 +1,5 @@
 <p align="center">
-<img src="https:
+<img src="https://tva1.sinaimg.cn/large/e6c9d24egy1h0ehoj8eesj20lw0kamxu.jpg" height="200"/>
 </p>
 
 <h1 align="center">
@@ -9,10 +9,10 @@ window-channel
 A very simple window communication library.
 <p>
 <p align="center">
-  <a href="https:
+  <a href="https://www.npmjs.com/package/@haiyaotec/window-channel"><img src="https://img.shields.io/npm/v/@haiyaotec/window-channel?color=a1b858&label="></a>
 <p>
 <h3 align="center">
-<a><i>Get Start!</i></a>
+<a ><i>Get Start!</i></a>
 </h3>
 <br>
 
@@ -24,16 +24,8 @@ npm install @haiyaotec/window-channel
 ## Usage/Examples
 `Client`
 ```typescript
-
-import {WindowChannel} from '@imf/window-channel'
-
-
-
-
-
+    import {WindowChannel} from '@imf/window-channel'
     let client = WindowChannel.newChannelClient(window,iFrame.contentWindow,"*")
-    
-
     function f() {
         client.request('/hello', '客户端发送的消息', 1000)
             .then((value) => {
@@ -43,20 +35,14 @@ import {WindowChannel} from '@imf/window-channel'
                 console.log(err)
             })
     }
-    f()
     setInterval(f,3000)
-
 ```
 
 `Server`
 ```typescript
 
 import {WindowChannel} from '@imf/window-channel'
-
-
-
 let service=WindowChannel.newChannelService(window)
-    
 
 service.listen('/hello',(value)=>{
     console.log(value)
@@ -75,4 +61,4 @@ setTimeout(()=>{
 
 ## License
 
-[MIT](./LICENSE) License © 2021-Present [YuDong Su](https:
+[MIT](./LICENSE) License © 2021-Present [YuDong Su](https://github.com/sudongyuer)
