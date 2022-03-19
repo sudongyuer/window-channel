@@ -5,6 +5,12 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "homepage": "https://github.com/HaiyaoTec/window-channel",
+  "keywords": [
+    "window",
+    "iframe",
+    "message",
+    "channel"
+  ],
   "repository": {
     "url": "https://github.com/HaiyaoTec/window-channel"
   },
