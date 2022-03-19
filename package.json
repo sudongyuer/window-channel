@@ -1,6 +1,6 @@
 {
   "name": "@haiyaotec/window-channel",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "iframe window message channel",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
