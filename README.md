@@ -24,7 +24,7 @@ npm install @haiyaotec/window-channel
 ## Usage/Examples
 `Client`
 ```typescript
-    import {WindowChannel} from '@imf/window-channel'
+    import {WindowChannel} from '@haiyaotec/window-channel'
     let client = WindowChannel.newChannelClient(window,iFrame.contentWindow,"*")
     function f() {
         client.request('/hello', '客户端发送的消息', 1000)
@@ -41,7 +41,7 @@ npm install @haiyaotec/window-channel
 `Server`
 ```typescript
 
-import {WindowChannel} from '@imf/window-channel'
+import {WindowChannel} from '@haiyaotec/window-channel'
 let service=WindowChannel.newChannelService(window)
 
 service.listen('/hello',(value)=>{
